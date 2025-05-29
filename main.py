@@ -7,6 +7,7 @@ from src.evaluate import evaluate_and_report, plot_confusion_matrix
 from src.utils import plot_decision_boundary, show_images
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
+from sklearn.model_selection import cross_val_score
 
 X_train, X_test, y_train, y_test = load_digits_filtered(3, 8)
 
@@ -30,15 +31,27 @@ show_images(X_train, y_train, count=5)
 
 logistic_model = get_logistic_model()
 logistic_model.fit(X_train_features, y_train)
-logistic_acc, logistic_preds = evaluate_and_report(logistic_model, X_test_features, y_test, model_name="Logistic Regression")
 
 svm_model = get_svm_model()
 svm_model.fit(X_train_features, y_train)
+
+scores = cross_val_score(logistic_model, X_train, y_train, cv=5, scoring='accuracy')
+print("Cross-validated scores:", scores)
+print("Mean accuracy:", scores.mean())
+
+scores = cross_val_score(svm_model, X_train, y_train, cv=5, scoring='accuracy')
+print("Cross-validated scores:", scores)
+print("Mean accuracy:", scores.mean())
+
+logistic_acc, logistic_preds = evaluate_and_report(logistic_model, X_test_features, y_test, model_name="Logistic Regression")
+
 svm_acc, svm_preds = evaluate_and_report(svm_model, X_test_features, y_test, model_name="SVM")
 
+
+
 # Optional
-plot_confusion_matrix(y_test, svm_preds, class_names=["Digit 3", "Digit 8"], model_name="Logistic Regression")
-plot_confusion_matrix(y_test, logistic_preds, class_names=["Digit 3", "Digit 8"], model_name="SVM")
+plot_confusion_matrix(y_test, logistic_preds, class_names=["Digit 3", "Digit 8"], model_name="Logistic Regression")
+plot_confusion_matrix(y_test,  svm_preds, class_names=["Digit 3", "Digit 8"], model_name="SVM")
 
 X_plot = X_train_features[:, [0, 5]]  
 y_plot = y_train

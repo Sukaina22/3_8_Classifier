@@ -12,7 +12,7 @@ F1-Score (1) 0.97 0.97
 
 I can say both models performed well and identically in accuracy and f1 score. However logistic regression had a perfect precision for class 1 but a lower recall while svm had same precision and recall for the two classes.
 
-Therefore, I can tell SVM showed more balanced behavior if we compare the metrics of the 3 and 8 classes. Linear SVM still maximizes the margin between classes — just in a straight line/hyperplane, and this gives it strong generalization.
+Therefore, I can tell SVM showed more balanced behavior if we compare the metrics of the 3 and 8 classes. Linear SVM maximizes the margin between classes — just in a straight line/hyperplane, and this gives it strong generalization.
 
 4- In this project, both Logistic Regression and SVM achieved high classification accuracy (~97%) on distinguishing digits 3 and 8. Since the feature space was linearly separable, both models learned similar decision boundaries.
 
